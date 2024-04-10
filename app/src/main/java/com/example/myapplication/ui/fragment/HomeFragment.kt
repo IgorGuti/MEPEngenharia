@@ -29,18 +29,14 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         val login_inicial = view.findViewById<Button>(R.id.login_inicial)
-        val Create_account = view.findViewById<Button>(R.id.Create_account)
+
 
         // Configurar ação de clique para o botão
         login_inicial.setOnClickListener {
             // Navegar para o fragmento de login
             findNavController().navigate(R.id.nav_login)
         }
-        // Configurar ação de clique para o botão
-        Create_account.setOnClickListener {
-            // Navegar para o fragmento de login
-            findNavController().navigate(R.id.nav_createAccount)
-        }
+
        return view
     }
 

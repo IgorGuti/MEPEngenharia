@@ -1,8 +1,5 @@
 package com.example.myapplication.di
 
-import com.example.myapplication.repository.FavoritosRepository
-import com.example.myapplication.repository.FirebaseAuthRepository
-import com.example.myapplication.ui.fragment.FavoritesFragment
 import com.example.myapplication.ui.viewModel.CadastroUsuarioViewModel
 import com.example.myapplication.ui.viewModel.EstadoAppViewModel
 import com.example.myapplication.ui.viewModel.LoginViewModel

@@ -12,5 +12,6 @@
     <color name="transparente">#00000000</color>
     <color name="estrela_favorita">#00FF0A</color>
     <color name="meiaTransparente">#CC9A9A9A</color>
+    <color name="CorMEP">#ED3237</color>
 
 </resources>

@@ -12,27 +12,13 @@
         android:id="@+id/login_inicial"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         android:text="Login"
         android:background="@drawable/botao_arrendodado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/Create_account"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/create_account"
-        android:background="@drawable/botao_arrendodado"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/login_inicial"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/login_inicial"
-        app:layout_constraintTop_toBottomOf="@+id/login_inicial"
-        app:layout_constraintVertical_bias="0.1" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -43,6 +29,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        app:srcCompat="@drawable/aqua_clean" />
+        app:layout_constraintVertical_bias="0.2"
+        app:srcCompat="@drawable/mep_engenharia" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.extensions.snackBar
-import com.example.myapplication.model.Usuario
-import com.example.myapplication.repository.FirebaseAuthRepository
 import com.example.myapplication.ui.viewModel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,28 +55,10 @@ class LoginFragment : Fragment() {
         showPasswordButton.setOnClickListener { togglePassword() }
 
 
-//        val logando = view.findViewById<Button>(R.id.logando)
-            val link_create = view.findViewById<TextView>(R.id.link_create)
-//        val link_recuperar_senha = view.findViewById<TextView>(R.id.link_recuperar_senha)
-//
-//        // Configura ação de clique para o botão "logando"
-//        logando.setOnClickListener {
-//            // Navega para o fragmento de favoritos (R.id.nav_favorites)
-//            findNavController().navigate(R.id.nav_favorites)
-//        }
-//
-        // Configura ação de clique para o botão "link_create"
-        link_create.setOnClickListener {
-          //  Navega para o fragmento de criar conta
-           findNavController().navigate(R.id.nav_createAccount)
-        }
-//
-//        // Configura ação de clique para o botão "link_create"
-//        link_recuperar_senha.setOnClickListener {
-//            // Navega para o fragmento de criar conta (R.id.nav_createAccount)
-//            findNavController().navigate(R.id.nav_reset_password)
-//        }
 
+
+
+//
 
         // Retorna a raiz do layout como a vista do fragmento
         return view
