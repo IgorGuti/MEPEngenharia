@@ -1,8 +1,6 @@
 package com.example.myapplication
 
-import android.nfc.Tag
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.navigation.NavigationView
@@ -15,8 +13,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.ui.fragment.AboutFragment
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 private const val TAG = "MainActivity"
 
@@ -24,8 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         // Define as configurações da AppBar, especificando os destinos de menu e o DrawerLayout
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_favorites , R.id.nav_assessments,  R.id.nav_profile
+                R.id.nav_monitorEletrico, R.id.nav_monitorReservatorio
             ), drawerLayout
         )
 
@@ -56,15 +50,6 @@ class MainActivity : AppCompatActivity() {
 
         // Configura o NavigationView para trabalhar com a navegação
         navView.setupWithNavController(navController)
-
-//        Firebase.auth.signInWithEmailAndPassword("suzanateste@tuamaeaquelaursa.com", "teste123")
-//            .addOnSuccessListener {
-//                Log.i(TAG, "onCrate: usuário está logado" )
-//            }
-//            .addOnFailureListener {
-//                Log.e(TAG,"onCrate: Usuário não logado")
-//            }
-
 
     }
 

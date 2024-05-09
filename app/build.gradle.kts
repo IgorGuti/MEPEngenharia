@@ -46,8 +46,6 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
-//    implementation(libs.lifecycle.livedata.ktx)
-//    implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.play.services.maps)
@@ -62,5 +60,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation ("io.insert-koin:koin-core:3.5.0")
     implementation ("io.insert-koin:koin-android:3.5.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
 }

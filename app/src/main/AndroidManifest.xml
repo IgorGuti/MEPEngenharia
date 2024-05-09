@@ -18,9 +18,6 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="34">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBHrHIj2-kSijE9mwpNl6O9sTQX8fv_NdI" />
 
         <activity
             android:name=".MainActivity"

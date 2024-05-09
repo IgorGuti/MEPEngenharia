@@ -13,8 +13,8 @@
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginTop="150dp"
-        android:text="Login"
         android:background="@drawable/botao_arrendodado"
+        android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,4 +31,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@drawable/mep_engenharia" />
+
+    <ImageButton
+        android:id="@+id/buttonInstagram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/instagram"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonWhatsapp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonWhatsapp"
+        app:layout_constraintTop_toTopOf="@+id/buttonWhatsapp"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/buttonWhatsapp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/whatsapp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_inicial" />
+
+    <ImageButton
+        android:id="@+id/buttonEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/email"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonWhatsapp"
+        app:layout_constraintStart_toEndOf="@+id/buttonWhatsapp"
+        app:layout_constraintTop_toTopOf="@+id/buttonWhatsapp"
+        app:layout_constraintVertical_bias="0.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

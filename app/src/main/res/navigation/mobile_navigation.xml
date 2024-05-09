@@ -9,104 +9,28 @@
         android:id="@+id/nav_home"
         android:name="com.example.myapplication.ui.fragment.HomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_home" >
-
-        <action
-            android:id="@+id/action_nav_home_to_nav_login"
-            app:destination="@id/nav_login" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_createAccount"
-            app:destination="@id/nav_createAccount" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_favorites"
-        android:name="com.example.myapplication.ui.fragment.FavoritesFragment"
-        android:label="@string/menu_favorites"
-        tools:layout="@layout/fragment_lista_favoritos" >
-        <action
-            android:id="@+id/action_nav_favorites_to_nav_assessments"
-            app:destination="@id/nav_assessments" />
-        <action
-            android:id="@+id/action_nav_favorites_to_menu_profile"
-            app:destination="@id/nav_profile" />
-        <action
-            android:id="@+id/action_nav_favorites_to_nav_logout"
-            app:destination="@id/nav_logout" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_assessments"
-        android:name="com.example.myapplication.ui.fragment.BuscarPraiaFragment"
-        android:label="@string/menu_Assessments"
-        tools:layout="@layout/fragment_buscar_praia" >
-        <action
-            android:id="@+id/action_nav_assessments_to_nav_logout"
-            app:destination="@id/nav_logout" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment android:id="@+id/nav_login"
         android:name="com.example.myapplication.ui.fragment.LoginFragment"
         android:label="@string/login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_nav_login_to_nav_createAccount"
-            app:destination="@id/nav_createAccount" />
-        <action
-            android:id="@+id/action_nav_login_to_nav_reset_password"
-            app:destination="@id/nav_reset_password" />
-        <action
-            android:id="@+id/action_nav_login_to_nav_favorites"
-            app:destination="@id/nav_favorites" />
-    </fragment>
-
-    <fragment android:id="@+id/nav_profile"
-        android:name="com.example.myapplication.ui.fragment.ProfileFragment"
-        tools:layout="@layout/fragment_profile"
-        >
-        <action
-            android:id="@+id/action_menu_profile_to_nav_favorites"
-            app:destination="@id/nav_favorites" />
-        <action
-            android:id="@+id/action_menu_profile_to_nav_assessments"
-            app:destination="@id/nav_assessments" />
-        <action
-            android:id="@+id/action_nav_profile_to_nav_logout"
-            app:destination="@id/nav_logout" />
-    </fragment>
-
-    <fragment android:id="@+id/nav_createAccount"
-        android:name="com.example.myapplication.ui.fragment.CreateAccountFragment"
-        android:label="@string/create_account"
-        tools:layout="@layout/fragment_create_account">
-        <action
-            android:id="@+id/action_nav_createAccount_to_nav_login"
-            app:destination="@id/nav_login" />
-        <action
-            android:id="@+id/action_nav_createAccount_to_nav_login2"
-            app:destination="@id/nav_login" />
-    </fragment>
-
-    <fragment android:id="@+id/nav_reset_password"
-        android:name="com.example.myapplication.ui.fragment.ResetPassword"
-        android:label="@string/reset_password"
-        tools:layout="@layout/fragment_reset_password">
-    </fragment>
+        tools:layout="@layout/fragment_login"/>
 
     <fragment android:id="@+id/nav_about"
         android:label="@string/About"
         tools:layout="@layout/fragment_about">
     </fragment>
 
-    <fragment android:id="@+id/nav_logout"
-        android:name="com.example.myapplication.ui.fragment.LoginFragment"
-        android:label="@string/logout"
-        tools:layout="@layout/fragment_login">
+    <fragment android:id="@+id/nav_monitorEletrico"
+        android:name="com.example.myapplication.ui.fragment.MonitorEletricoFragment"
+        android:label="@string/monitorEletrico"
+        tools:layout="@layout/fragment_list_monitor_eletrico">
     </fragment>
 
-    <fragment android:id="@+id/nav_verPraia"
-        android:name="com.example.myapplication.ui.fragment.VisualizarPraiaFragment"
-        android:label="@string/verPraia"
-        tools:layout="@layout/fragment_visualizar_praia">
+    <fragment android:id="@+id/nav_monitorReservatorio"
+        android:name="com.example.myapplication.ui.fragment.MonitorReservatorioFragment"
+        android:label="@string/monitorReservatorio"
+        tools:layout="@layout/fragment_list_monitor_eletrico">
     </fragment>
+
 </navigation>

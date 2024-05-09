@@ -8,6 +8,8 @@
     <string name="About">About</string>
     <string name="Welcome">Bem vindo</string>
     <string name="logout">Logout</string>
+    <string name="monitorEletrico">Monitor de eletrico</string>
+    <string name="monitorReservatorio">Monitor de reservatorios</string>
     <string name="menu_profile">Perfil</string>
     <string name="menu_favorites">Praias favoritas</string>
     <string name="menu_Assessments">Buscar praias</string>
