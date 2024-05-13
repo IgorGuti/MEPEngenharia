@@ -12,6 +12,7 @@ constraintlayout = "2.1.4"
 #lifecycle-viewmodel-ktx = "2.6.1"
 navigation-fragment-ktx = "2.7.0"
 navigation-ui-ktx = "2.7.0"
+volley = "1.2.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -26,6 +27,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version = "18.1.0" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
