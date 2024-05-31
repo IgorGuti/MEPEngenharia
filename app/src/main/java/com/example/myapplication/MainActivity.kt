@@ -1,20 +1,25 @@
 package com.example.myapplication
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.navigation.NavigationView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.ui.fragment.AboutFragment
-
-private const val TAG = "MainActivity"
+import com.example.myapplication.ui.repository.MqttService
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +56,31 @@ class MainActivity : AppCompatActivity() {
         // Configura o NavigationView para trabalhar com a navegação
         navView.setupWithNavController(navController)
 
+        // Solicita permissão para notificações se necessário
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                startMqttService()
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            startMqttService()
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            startMqttService()
+        } else {
+            // A permissão não foi concedida. Informe ao usuário que a permissão é necessária.
+        }
+    }
+
+    private fun startMqttService() {
+        val serviceIntent = Intent(this, MqttService::class.java)
+        startService(serviceIntent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -77,18 +107,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onSupportNavigateUp(): Boolean {
         // Configura a navegação de retorno na ActionBar
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    companion object {
-        // Visibilidade do botão hamburguer do layout drawer
-
-
-
-    }
-
 }

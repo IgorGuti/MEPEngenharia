@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
         hiperlinkWhatsapp.setOnClickListener {
             // Adicione aqui o código para abrir o Instagram
             // Substitua "sua_pagina_aqui" pela página desejada
-            val whatsappUri = Uri.parse("https://api.whatsapp.com/send/?phone=5561998166796&text&type=phone_number&app_absent=0")
+            val whatsappUri = Uri.parse("https://api.whatsapp.com/send/?phone=556132565996&text&type=phone_number&app_absent=0")
             val intent = Intent(Intent.ACTION_VIEW, whatsappUri)
             if (intent.resolveActivity(requireActivity().packageManager) != null) {
                 startActivity(intent)

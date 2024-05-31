@@ -1,17 +1,16 @@
 package com.example.myapplication.ui.repository
 
-// Importações necessárias para usar o Retrofit e Gson
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 // Classe responsável por criar uma instância do Retrofit e fornecer o serviço da API
-class ApiClient() {
+class ApiClient {
     // Instância do Retrofit configurada com a URL base e um conversor Gson
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.101:3324/users/") // Define a URL base da API
-        .addConverterFactory(ScalarsConverterFactory.create()) // Adiciona o conversor Scalars para lidar com texto bruto
+        .baseUrl("http://192.168.1.76:5000/") // Define a URL base da API
+        .addConverterFactory(GsonConverterFactory.create()) // Adiciona o conversor Gson para lidar com objetos serializados
         .build()
 
     // Serviço da API criado a partir da interface ApiService
-    val service = retrofit.create(ApiService::class.java)
+    val service: ApiService = retrofit.create(ApiService::class.java)
 }

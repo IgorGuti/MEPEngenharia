@@ -1,46 +1,113 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta charset="utf-8"> <!-- Definir a codificação de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configurar viewport para dispositivos móveis -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> <!-- Importar a biblioteca do Google Charts -->
     <script type="text/javascript">
+        // Variável para armazenar a instância do gráfico e os dados
+        var chart, data;
+
+        // Carrega o pacote Gauge do Google Charts quando uma página é carregada
         google.charts.load('current', {'packages':['gauge']});
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart); // Chama a função drawChart após o carregamento do pacote
 
+        // Função para desenhar o gráfico
         function drawChart() {
-
-            var data = google.visualization.arrayToDataTable([
-                ['Label', 'Value'],
-                ['Memory', 80],
-                ['CPU', 55],
-                ['Network', 68]
+            // Define os dados para o gráfico
+            data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'], // Colunas: Label e Valor
+                ['Nível', 0] // Define o rótulo e o valor inicial
             ]);
 
+            // Opções de configuração do gráfico
             var options = {
-                    width: 400, height: 120,
-                    redFrom: 90, redTo: 100,
-                    yellowFrom:75, yellowTo: 90,
-                    minorTicks: 5
+                width: '100%', // Usa 100% da largura disponível
+                height: '100%', // Usa 100% da altura disponível
+                redFrom: 0, redTo: 10, // Faixa vermelha
+                yellowFrom: 10, yellowTo: 25, // Faixa amarela
+                greenFrom: 25, greenTo: 100, // Faixa verde
+                minorTicks: 5 // Marcas menores
             };
 
-            var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+            // Cria uma instância do gráfico de medidor com o elemento de destino 'chart_div'
+            chart = new google.visualization.Gauge(document.getElementById('chart_div'));
 
+            // Desenha o gráfico com os dados e opções definidas
             chart.draw(data, options);
+        }
 
-            setInterval(function() {
-                data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-                chart.draw(data, options);
-            }, 13000);
-            setInterval(function() {
-                data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
-                chart.draw(data, options);
-            }, 5000);
-            setInterval(function() {
-                data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
-                chart.draw(data, options);
-            }, 26000);
+        function updateGauge(value) {
+            var currentValue = data.getValue(0, 1); // Valor atual do medidor
+
+            // Função auxiliar para animar o medidor de forma gradual
+            function animateGauge(targetValue) {
+                if (currentValue < targetValue) {
+                    currentValue++;
+                } else if (currentValue > targetValue) {
+                    currentValue--;
+                }
+                // Atualiza o medidor com o novo valor
+                carregarDados(currentValue);
+
+                // Se não alcançamos o valor alvo, continuamos a animação
+                if (currentValue !== targetValue) {
+                    setTimeout(function() {
+                        animateGauge(targetValue);
+                    }, 50); // Ajusta este valor para controlar a velocidade da animação
+                }
+            }
+
+            // Inicia a animação para o novo valor
+            animateGauge(value);
+        }
+         // Função para atualizar o valor do medidor
+        function carregarDados(value) {
+            // Define os dados para os gráficos
+            data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'], // Colunas: Label e Valor
+                ['Nível', value] // Define o rótulo e o valor inicial
+            ]);
+
+            // Opções de configuração do gráfico
+            var options = {
+                width: '100%', // Usa 100% da largura disponível
+                height: '100%', // Usa 100% da altura disponível
+                redFrom: 0, redTo: 10, // Faixa vermelha
+                yellowFrom: 10, yellowTo: 25, // Faixa amarela
+                greenFrom: 25, greenTo: 100, // Faixa verde
+                minorTicks: 5 // Marcas menores
+            };
+
+            // Cria uma instância do gráfico de medidor com o elemento de destino 'chart_div'
+            chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+            // Desenha o gráfico com os dados e opções definidas
+            chart.draw(data, options);
         }
     </script>
+    <style>
+        /* Garantir que os elementos body e html ocupem todo o espaço disponível */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        /* Garantir que #chart_div ocupe todo o espaço disponível */
+        #chart_div {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
-<div id="chart_div" style="width: 400px; height: 120px;"></div>
+<div id="chart_div"></div> <!-- Container para o gráfico -->
+<script type="text/javascript">
+    // Exemplo de uso da função updateGauge
+    // Atualiza o valor do medidor para 50 após 2 segundos
+    setTimeout(function() {
+        updateGauge(0);
+    }, 2000);
+</script>
 </body>
 </html>

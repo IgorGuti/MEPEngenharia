@@ -25,7 +25,7 @@
             android:text="Apartamento" />
 
         <LinearLayout
-            android:id="@+id/ExtenderLinearLayout"
+            android:id="@+id/ExtenderLinearLayoutApartamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -567,7 +567,6 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

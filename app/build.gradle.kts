@@ -38,6 +38,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    // Adicione estas linhas
+    useLibrary ("org.apache.http.legacy")
 }
 
 dependencies {
@@ -59,5 +61,9 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
-
+    implementation ("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+    implementation ("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
+    implementation ("androidx.core:core-ktx:1.9.0")
+    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
 }
+

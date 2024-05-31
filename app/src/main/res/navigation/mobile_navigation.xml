@@ -30,7 +30,7 @@
     <fragment android:id="@+id/nav_monitorReservatorio"
         android:name="com.example.myapplication.ui.fragment.MonitorReservatorioFragment"
         android:label="@string/monitorReservatorio"
-        tools:layout="@layout/fragment_list_monitor_eletrico">
+        tools:layout="@layout/fragment_list_monitor_reservatorio">
     </fragment>
 
 </navigation>

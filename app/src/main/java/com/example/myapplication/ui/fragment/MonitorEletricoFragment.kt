@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.ui.adapter.MonitorAdapter
+import com.example.myapplication.ui.adapter.MonitorEletricoAdapter
 import com.example.myapplication.ui.repository.ApartamentoRepository
 
 class MonitorEletricoFragment : Fragment() {
@@ -33,7 +33,7 @@ class MonitorEletricoFragment : Fragment() {
         val recyclerViewMonitorEletrico = view.findViewById<RecyclerView>(R.id.lista_relogios_recyclerview)
 
         // Criando e configurando o adaptador para a lista
-        val adapter = MonitorAdapter(listaDeApartamentos) { apartamento ->
+        val adapter = MonitorEletricoAdapter(listaDeApartamentos) { apartamento ->
             // Ação a ser executada quando um botão for clicado
             Toast.makeText(requireContext(), "Botão do apartamento $apartamento clicado", Toast.LENGTH_SHORT).show()
         }

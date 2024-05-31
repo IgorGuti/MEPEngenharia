@@ -1,51 +1,51 @@
 package com.example.myapplication.ui.repository
 
 import android.content.Context
+import android.net.ConnectivityManager
 import android.widget.Toast
-import retrofit2.Callback
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
-// Classe responsável por acessar os dados da API
-class BancoDeDados(apiClient: ApiClient) {
-    // Instância do serviço da API fornecida pelo ApiClient
-    private val service = apiClient.service
+class BancoDeDados(private val apiClient: ApiClient) {
 
-    // Método para obter os posts da API
-    // Método para obter os posts da API
-    fun getHelloWord(context: Context, callback: Callback<String>) {
-        // Faz uma chamada assíncrona para obter os posts
-        val call = service.getOlaMundo()
+    fun realizarRequisicao(context: Context, onDataReceivedListener: OnDataReceivedListener) {
+        // Verificar conectividade de rede antes de fazer a requisição
+        if (!isNetworkConnected(context)) {
+            Toast.makeText(context, "Sem conexão com a internet", Toast.LENGTH_SHORT).show()
+            return
+        }
+        // Fazer a chamada para o endpoint desejado
+        val call = apiClient.service.getAguaTeste()
 
-        // Enfileira a chamada para executor em uma thread de fundo e especifica o callback personalizado
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
+        // Executar a chamada assincronamente
+        call.enqueue(object : Callback<List<String>> {
+            override fun onResponse(
+                call: Call<List<String>>,
+                response: Response<List<String>>
+            ) {
                 if (response.isSuccessful) {
-                    // Se a resposta for bem-sucedida, chama o método onResponse do callback com a string de resposta
-                    callback.onResponse(call, Response.success(response.body() ?: ""))
-
-                    // Aqui você pode processar a string de resposta conforme necessário
-                    val mensagem = response.body() ?: "Resposta vazia"
-                    exibirToast(context, mensagem)
+                    // Requisição bem sucedida, manipular os dados aqui
+                    val dadosServidor = response.body()
+                    // Invoque o callback com os dados recebidos
+                    dadosServidor?.let { onDataReceivedListener.onDataReceived(it) }
                 } else {
-                    // Se houver um erro na resposta, chama o método onFailure do callback com o erro
-                    callback.onFailure(call, Throwable("Erro na requisição: ${response.code()}"))
+                    // Requisição não bem sucedida
+                    Toast.makeText(context, "Erro na resposta do servidor.", Toast.LENGTH_SHORT).show()
                 }
             }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                // Se houver uma falha na requisição, chama o método onFailure do callback com o erro
-                callback.onFailure(call, t)
-
-                // Exibe uma mensagem de erro em um Toast
-                exibirToast(context, "Falha na requisição: ${t.message}")
+            override fun onFailure(call: Call<List<String>>, t: Throwable) {
+                // Ocorreu um erro durante a requisição
+                Toast.makeText(context, "Erro ao realizar requisição: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    // Método auxiliar para exibir um Toast com uma mensagem
-    private fun exibirToast(context: Context, mensagem: String) {
-        Toast.makeText(context, mensagem, Toast.LENGTH_SHORT).show()
+    // Função para verificar conectividade de rede
+    private fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
-
 }
