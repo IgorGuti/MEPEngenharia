@@ -50,7 +50,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/dataRegistro"
+                    android:id="@+id/idDataRegistro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="11-11-2011 11:11:11"
@@ -64,36 +64,25 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/idVolume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1L"
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/distancia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Distancia:"
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/idDistancia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1CM"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/qualMedidor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ID:"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textSize="16dp" />
             </LinearLayout>
 
             <RelativeLayout

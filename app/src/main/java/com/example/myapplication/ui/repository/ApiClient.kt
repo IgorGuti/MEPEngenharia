@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiClient {
     // Instância do Retrofit configurada com a URL base e um conversor Gson
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.76:5000/") // Define a URL base da API
+        .baseUrl("http://192.168.1.19:5000/") // Define a URL base da API
         .addConverterFactory(GsonConverterFactory.create()) // Adiciona o conversor Gson para lidar com objetos serializados
         .build()
 

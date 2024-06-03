@@ -9,6 +9,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -70,6 +71,9 @@ class MonitorReservatorioAdapter(
 
     inner class ListaDeReservatoriosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val buttonReservatorio: Button = itemView.findViewById(R.id.idButtonReservatorio)
+        private val texteViewData: TextView = itemView.findViewById(R.id.idDataRegistro)
+        private val texteViewVolume: TextView = itemView.findViewById(R.id.idVolume)
+        private val texteViewDistancia: TextView = itemView.findViewById(R.id.idDistancia)
         val expandedLayout: LinearLayout = itemView.findViewById(R.id.ExtenderLinearLayoutReservatorio)
         private val webView: WebView = itemView.findViewById(R.id.webView)
 
@@ -105,6 +109,12 @@ class MonitorReservatorioAdapter(
                 }
             }
         }
+        fun updateTextView(nomeString: String, dataString: String, volumeString: String, distanciaString: String) {
+            buttonReservatorio.text = nomeString
+            texteViewData.text = dataString
+            texteViewVolume.text = volumeString
+            texteViewDistancia.text = distanciaString
+        }
     }
 
     override fun onDataReceived(data: List<String>) {
@@ -112,11 +122,23 @@ class MonitorReservatorioAdapter(
             Toast.makeText(recyclerView?.context, "Não há dados suficientes do servidor.", Toast.LENGTH_SHORT).show()
             return
         }
+        val nomeString = data[0]
+        val dataString = data[1]
+        val volumeString = data[2]
+        val distanciaString = data[3]
         val nivelString = data[4]
         val value = nivelString.toIntOrNull()
         value?.let {
             gaugeValue = it  // Atualiza o valor do medidor
             notifyDataSetChanged()  // Notifica o RecyclerView para atualizar as visualizações
+
+            recyclerView?.let { rv ->// Chama updateTextView para cada ViewHolder visível
+                for (i in 0 until rv.childCount) {
+                    val holder = rv.getChildViewHolder(rv.getChildAt(i)) as? ListaDeReservatoriosViewHolder
+                    holder?.updateTextView(nomeString, dataString, volumeString, distanciaString)
+                }
+            }
         }
+
     }
 }
