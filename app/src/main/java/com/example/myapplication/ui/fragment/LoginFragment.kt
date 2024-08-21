@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
 // Configurar ação de clique para o botão "Login Inicial"
         monitor_eletrico.setOnClickListener {
             // Navegar para o fragmento de login
-            findNavController().navigate(R.id.nav_monitorEletrico)
+            findNavController().navigate(R.id.nav_monitorReservatorio)
         }
         return view
     }

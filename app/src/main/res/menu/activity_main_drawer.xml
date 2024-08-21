@@ -5,10 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_monitorEletrico"
-            android:icon="@drawable/usuario"
-            android:title="Monitor Eletrico" />
-        <item
             android:id="@+id/nav_monitorReservatorio"
             android:icon="@drawable/usuario"
             android:title="Reservatório" />
