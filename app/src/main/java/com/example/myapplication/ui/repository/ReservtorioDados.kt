@@ -5,3 +5,4 @@ data class ReservatorioDados(
     val volume: Int,
     val distancia: Int
 )
+

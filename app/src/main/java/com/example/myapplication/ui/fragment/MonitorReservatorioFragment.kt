@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,7 +19,7 @@ import com.example.myapplication.ui.repository.ApiRepository
 
 class MonitorReservatorioFragment : Fragment() {
 
-    private val apiRepository = ApiRepository()
+    private lateinit var apiRepository: ApiRepository
     private lateinit var webView: WebView
     private lateinit var nomeView: TextView
     private lateinit var nivelView: TextView
@@ -32,6 +33,7 @@ class MonitorReservatorioFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflar o layout do fragmento
         return inflater.inflate(R.layout.fragment_item_monitor_reservatorio, container, false)
     }
 
@@ -44,6 +46,7 @@ class MonitorReservatorioFragment : Fragment() {
         volumeView = view.findViewById(R.id.volumeReservatorio)
         distanciaView = view.findViewById(R.id.distanciaReservatorio)
 
+        // Inicializa o WebView
         webView = view.findViewById(R.id.webView)
         webView.webChromeClient = WebChromeClient()
         webView.webViewClient = object : WebViewClient() {
@@ -55,13 +58,15 @@ class MonitorReservatorioFragment : Fragment() {
                 startPeriodicUpdates()
             }
         }
-
         val webSettings: WebSettings = webView.settings
         webSettings.javaScriptEnabled = true
 
         // Caminho completo para o arquivo HTML
-        val htmlFilePath = "file:///android_asset/monitor.html"
+        val htmlFilePath = "file:///android_asset/1.html"
         webView.loadUrl(htmlFilePath)
+
+        // Inicializa o ApiRepository com o contexto
+        apiRepository = ApiRepository(requireContext())
     }
 
     private fun startPeriodicUpdates() {
@@ -73,7 +78,6 @@ class MonitorReservatorioFragment : Fragment() {
             }
         })
     }
-
     private fun carregarDadosReservatorio() {
         apiRepository.fetchReservatorioDados { dados ->
             dados?.let {
@@ -92,12 +96,15 @@ class MonitorReservatorioFragment : Fragment() {
             }
         }
     }
-
     private fun setGaugeValue(value: Int) {
         webView.evaluateJavascript("setGaugeValue($value);") { result ->
             println("Resultado do JavaScript: $result")
             // A função setGaugeValue foi chamada com sucesso
             // Você pode tratar o resultado aqui, se necessário
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacksAndMessages(null) // Remove todos os callbacks do handler
     }
 }
