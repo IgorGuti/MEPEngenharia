@@ -52,6 +52,7 @@ class MonitorEletricoFragment : Fragment() {
                 // Implementar lógica de clique aqui, se necessário
             }, apiRepository)
             recyclerViewMonitorEletrico.adapter = adapter
+            //resolvido
         }
     }
 }
