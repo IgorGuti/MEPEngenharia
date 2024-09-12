@@ -4,42 +4,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.ui.adapter.MonitorAdapter
-import com.example.myapplication.ui.repository.ApartamentoRepository
+import com.example.myapplication.ui.repository.ApiRepository
+import com.example.myapplication.ui.repository.UserViewModel
 
 class MonitorEletricoFragment : Fragment() {
 
-    // Lista de apartamentos
-    private val listaDeApartamentos = ApartamentoRepository.getListaDeApartamentos()
+    private lateinit var recyclerViewMonitorEletrico: RecyclerView
+    private lateinit var adapter: MonitorAdapter
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var apiRepository: ApiRepository // Adicione esta linha
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list_monitor_eletrico, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Encontrando o RecyclerView
-        val recyclerViewMonitorEletrico = view.findViewById<RecyclerView>(R.id.lista_relogios_recyclerview)
+        recyclerViewMonitorEletrico = view.findViewById(R.id.lista_relogios_recyclerview)
+            ?: throw IllegalStateException("RecyclerView não encontrado")
 
-        // Criando e configurando o adaptador para a lista
-        val adapter = MonitorAdapter(listaDeApartamentos) { apartamento ->
-            // Ação a ser executada quando um botão for clicado
-            Toast.makeText(requireContext(), "Botão do apartamento $apartamento clicado", Toast.LENGTH_SHORT).show()
-        }
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+
+        // Inicialize o ApiRepository
+        apiRepository = ApiRepository(requireContext()) // ou obtenha a instância de acordo com sua implementação
+
+        recyclerViewMonitorEletrico.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter = MonitorAdapter(emptyList(), { medidor ->
+            // Implementar lógica de clique aqui, se necessário
+        }, apiRepository)
+
         recyclerViewMonitorEletrico.adapter = adapter
 
-        // Definindo o layout do gerenciador de layout
-        recyclerViewMonitorEletrico.layoutManager = LinearLayoutManager(requireContext())
+        userViewModel.medidores.observe(viewLifecycleOwner) { medidores ->
+            adapter = MonitorAdapter(medidores, { medidor ->
+                // Implementar lógica de clique aqui, se necessário
+            }, apiRepository)
+            recyclerViewMonitorEletrico.adapter = adapter
+        }
     }
 }

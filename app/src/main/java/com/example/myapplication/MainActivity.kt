@@ -3,16 +3,18 @@ package com.example.myapplication
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.navigation.NavigationView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.ui.fragment.AboutFragment
+import com.example.myapplication.ui.repository.UserViewModel
 
 private const val TAG = "MainActivity"
 
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         // Configura o NavigationView para trabalhar com a navegação
         navView.setupWithNavController(navController)
 
+        // Observa mudanças no LoginResponse
+        userViewModel.loginResponse.observe(this) { loginResponse ->
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.action_about -> {
                 // Crie uma instância do fragmento AboutFragment
                 val aboutFragment = AboutFragment()
@@ -71,12 +79,11 @@ class MainActivity : AppCompatActivity() {
                     .addToBackStack(null) // Adicione à pilha de retorno se desejar
                     .commit()
 
-                return true
+                true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         // Configura a navegação de retorno na ActionBar
@@ -86,9 +93,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         // Visibilidade do botão hamburguer do layout drawer
-
-
-
     }
-
 }

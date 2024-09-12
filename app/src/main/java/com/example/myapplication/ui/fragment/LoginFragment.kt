@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.ui.repository.ApiRepository
+import com.example.myapplication.ui.repository.UserViewModel
 
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
+    private val userViewModel: UserViewModel by activityViewModels()
     private lateinit var apiRepository: ApiRepository
 
     override fun onCreateView(
@@ -34,14 +35,24 @@ class LoginFragment : Fragment() {
             val username = binding.loginUsuario.text.toString()
             val password = binding.loginSenha.text.toString()
 
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(requireContext(), "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             apiRepository.login(username, password,
-                onSuccess = {
+                onSuccess = { loginResponse, reservatorios, medidores, hidrometros ->
+                    // Atualiza o ViewModel com a resposta do login e as listas
+                    userViewModel.setLoginResponse(loginResponse)
+                    userViewModel.setReservatorios(reservatorios)
+                    userViewModel.setMedidores(medidores)
+                    userViewModel.setHidrometros(hidrometros)
                     // Navegar para o próximo fragmento após o login bem-sucedido
-                    findNavController().navigate(R.id.nav_monitorReservatorio)
+                    findNavController().navigate(R.id.nav_monitorEletrico)
                 },
                 onFailure = { throwable ->
-                    // Tratar falha na requisição
-                    println("Falha na requisição: ${throwable.message}")
+                    // Mostrar mensagem de erro para o usuário
+                    Toast.makeText(requireContext(), "Falha na requisição: ${throwable.message}", Toast.LENGTH_LONG).show()
                 }
             )
         }
