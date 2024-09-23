@@ -22,14 +22,14 @@ import retrofit2.http.Query
 
 // Interface para definir a API
 interface ApiService {
-    @POST("app/login")
+    @POST("users/app/login")
     fun login(@Body login: Login): Call<LoginResponse>
-    @GET("app/{route}/reservatorio")
+    @GET("users/app/{route}/reservatorio")
     suspend fun getReservatorio(
         @Path("route") route: String,
         @Query("id") id: String
     ): ReservatorioResponse
-    @GET("app/{route}/eletrico")
+    @GET("users/app/{route}/eletrico")
     suspend fun getEletrico(
         @Path("route") route: String,
         @Query("id") id: String
@@ -38,7 +38,7 @@ interface ApiService {
 class ApiRepository(private val context: Context) {
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.81:5000/") // Substitua pela URL base da sua API
+        .baseUrl("http://192.168.1.152:5000/") // Substitua pela URL base da sua API
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -172,6 +172,7 @@ class ApiRepository(private val context: Context) {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 handler.removeCallbacks(runnable)
                 val loginResponse = response.body()
+                Log.d("Response Login", loginResponse.toString())
                 if (loginResponse != null) {
                     if (loginResponse.resultado == "Login bem-sucedido") {
                         try {

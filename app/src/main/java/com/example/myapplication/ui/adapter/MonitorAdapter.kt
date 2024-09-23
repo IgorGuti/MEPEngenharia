@@ -22,18 +22,25 @@ class MonitorAdapter(
 ) : RecyclerView.Adapter<MonitorAdapter.MedidorViewHolder>() {
 
     private val estadosExpansao = mutableSetOf<Int>()
+    val myList = mutableListOf<Int?>()
     private val handler = Handler(Looper.getMainLooper())
     private val logRunnable = object : Runnable {
         override fun run() {
-            registrarExpansoes()
             handler.postDelayed(this, 15000) // Registra a cada 15 segundos
+            Log.d("Estou em loop", "Testando")
+            if (myList.size > 4) {
+                for (i in myList) {
+                    if (i != null) {
+                        val idMed = medidores[i].identificador // Acesse o ID do medidor
+                        Log.d("ID Medidor", "ID na posição $i: $idMed")
+                    }
+                }
+            }
         }
     }
-
     init {
         handler.post(logRunnable)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedidorViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_item_monitor_eletrico, parent, false)
@@ -46,53 +53,38 @@ class MonitorAdapter(
 
         val isExpanded = estadosExpansao.contains(position)
         holder.expandedLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
-
-        if (isExpanded) {
-            apiRepository.getEletrico("teste_testado", medidor.identificador.toString(),
-                onSuccess = { resposta ->
-                    // Use post para garantir atualizações na UI na thread principal
-                    holder.itemView.post {
-                        if (position == holder.adapterPosition) {
-                            holder.updateTextViews(resposta)
-                        } else {
-                            Log.d("MedidorAdapter", "ViewHolder reciclado antes da atualização")
-                        }
-                    }
-                },
-                onFailure = { erro ->
-                    Log.e("ApiRepository", "Erro: ${erro.message}")
-                }
-            )
-        }
     }
     override fun getItemCount(): Int = medidores.size
 
-    private fun registrarExpansoes() {
-        for (position in medidores.indices) {
-            val isExpanded = estadosExpansao.contains(position)
-            val medidor = medidores[position]
-            registrarExpansao(position, isExpanded, medidor.nome, medidor.identificador.toString())
-        }
-    }
+    private fun registrarExpansao(position: Int) {
+        Log.d("MonitorAdapter", "Requisição para o medidor na posição $position")
 
-    private fun registrarExpansao(position: Int, isExpanded: Boolean, nomeMedidor: String, idMedidor: String) {
-        val estado = if (isExpanded) "expandido" else "recolhido"
-        Log.d("MonitorAdapter", "Item na posição $position está $estado. Nome: $nomeMedidor, ID: $idMedidor")
-
-        apiRepository.getEletrico("teste_testado", idMedidor,
-            onSuccess = { responseEletrico ->
-                Log.d("Resposta Servidor", "$responseEletrico")
-
-                if (estadosExpansao.contains(position)) {
-                    val medidorAtualizado = medidores[position].copy(respostaEletrico = responseEletrico)
-                    medidores = medidores.toMutableList().apply { this[position] = medidorAtualizado }
-                    notifyItemChanged(position)
-                }
-            },
-            onFailure = { erro ->
-                Log.e("ApiRepository", "Erro: ${erro.message}")
+        if (myList.size > 4){
+            myList.removeAt(0)
+            if (!myList.contains(position)){
+                myList.add(position)
             }
-        )
+            Log.d("Adicionado a lista", position.toString())
+        } else {
+            if (!myList.contains(position)){
+                myList.add(position)
+            }
+            Log.d("Adicionado a lista", position.toString())
+        }
+        Log.d("lista", myList.toString())
+
+//        apiRepository.getEletrico("teste_testado", idMedidor,
+//            onSuccess = { responseEletrico ->
+//                Log.d("Resposta Servidor", "$responseEletrico")
+//                // Atualiza o medidor com a resposta recebida
+//                val medidorAtualizado = medidores[position].copy(respostaEletrico = responseEletrico)
+//                medidores = medidores.toMutableList().apply { this[position] = medidorAtualizado }
+//                notifyItemChanged(position)
+//            },
+//            onFailure = { erro ->
+//                Log.e("ApiRepository", "Erro: ${erro.message}")
+//            }
+//        )
     }
 
     inner class MedidorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -132,11 +124,9 @@ class MonitorAdapter(
                         estadosExpansao.add(position)
                     }
                     notifyItemChanged(position)
-                    val medidor = medidores[position]
-                    registrarExpansao(position, !isExpanded, medidor.nome, medidor.identificador.toString())
+                    registrarExpansao(position)
                 }
             }
-
             textViewMaisDetalhes.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -180,6 +170,9 @@ class MonitorAdapter(
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
+        pararLoop()
+    }
+    private fun pararLoop() {
         handler.removeCallbacks(logRunnable)
     }
 }
